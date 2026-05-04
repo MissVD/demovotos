@@ -1,15 +1,15 @@
 package com.example.DAO;
 
-public class tipo_de_usuario {
+public class TipoDeUsuario {
     private int id_tipo;
     private String nombre;
 
-    public tipo_de_usuario() {
+    public TipoDeUsuario() {
         this.id_tipo = 0;
         this.nombre = "";
     }
     
-    public tipo_de_usuario(int id_tipo, String nombre) {
+    public TipoDeUsuario(int id_tipo, String nombre) {
         this.id_tipo = id_tipo;
         this.nombre = nombre;
     }

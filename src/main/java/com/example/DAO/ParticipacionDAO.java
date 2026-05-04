@@ -10,15 +10,15 @@ import java.util.List;
 
 import com.example.UI.Alerta;
 
-public class participacionDAO {
+public class ParticipacionDAO {
     //mostrar todos registros de participacion
-    public static List<participacion> mostrar_participacion() {
+    public static List<Participacion> mostrar_participacion() {
         String consulta = "SELECT * FROM participacion";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);) {
             try (ResultSet rs = stmt.executeQuery()){
-                List<participacion> participaciones = new ArrayList<>();
+                List<Participacion> participaciones = new ArrayList<>();
                 while(rs.next()) {
-                    participacion participacion = new participacion(rs.getString("codigo_participacion"), rs.getInt("id_categoria"), rs.getInt("id_tipo"), rs.getTimestamp("fecha_voto").toLocalDateTime());
+                    Participacion participacion = new Participacion(rs.getString("codigo_participacion"), rs.getInt("id_categoria"), rs.getInt("id_tipo"), rs.getTimestamp("fecha_voto").toLocalDateTime());
                     participaciones.add(participacion);
                 }
             return participaciones;
@@ -32,15 +32,37 @@ public class participacionDAO {
         }
     }
 
-    // mostrar participacion por usuario
-    public static List<participacion> mostrar_participacion(String columna, String parametro) {
-        String consulta = "SELECT * FROM participacion WHERE " + columna + " = ?";
+    // mostrar participacion por parametro
+    public static List<Participacion> mostrar_participacion(int opcion, String parametro) {
+        String[] columnas = {"codigo_participacion", "id_categoria", "id_tipo", "fecha_voto"};
+
+        if (opcion < 0 || opcion >= columnas.length) {
+            Alerta.mostrar("Opción de búsqueda no válida.");
+            return new ArrayList<>();
+        }
+
+        String consulta = "SELECT * FROM participacion WHERE " + columnas[opcion] + " = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);) {
-            stmt.setString(1, parametro);
+            switch (opcion) {
+                case 0:
+                    stmt.setString(1, parametro);
+                    break;
+                case 1:
+                case 2:
+                    stmt.setInt(1, Integer.parseInt(parametro));
+                    break;
+                case 3:
+                    stmt.setTimestamp(1, Timestamp.valueOf(parametro));
+                    break;
+                default:
+                    Alerta.mostrar("Opción no válida.");
+                    return new ArrayList<>();
+            }
+
             try (ResultSet rs = stmt.executeQuery()){
-                List<participacion> participaciones = new ArrayList<>();
+                List<Participacion> participaciones = new ArrayList<>();
                 while(rs.next()) {
-                    participacion participacion = new participacion(rs.getString("codigo_participacion"), rs.getInt("id_categoria"), rs.getInt("id_tipo"), rs.getTimestamp("fecha_voto").toLocalDateTime());
+                    Participacion participacion = new Participacion(rs.getString("codigo_participacion"), rs.getInt("id_categoria"), rs.getInt("id_tipo"), rs.getTimestamp("fecha_voto").toLocalDateTime());
                     participaciones.add(participacion);
                 }
             return participaciones;
@@ -55,7 +77,7 @@ public class participacionDAO {
     }
 
     //insertar participacion
-    public static void insertar_participacion(participacion participacion) {
+    public static void insertar_participacion(Participacion participacion) {
         String consulta = "INSERT INTO participacion (codigo_participacion, id_categoria, id_tipo, fecha_voto) VALUES (?, ?, ?, ?)";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setString(1, participacion.getCodigo_participacion());
@@ -72,8 +94,8 @@ public class participacionDAO {
     }
 
     //modificar participacion
-    public static void modificar_participacion (participacion participacion) {
-        String consulta = "UPDATE participacion SET id_categoria = ?, SET id_tipo = ?, SET fecha_voto = ?, WHERE codigo_participacion = ?";
+    public static void modificar_participacion(Participacion participacion) {
+        String consulta = "UPDATE participacion SET id_categoria = ?, id_tipo = ?, fecha_voto = ? WHERE codigo_participacion = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setInt(1, participacion.getId_categoria());
             stmt.setInt(2, participacion.getId_tipo());
@@ -84,12 +106,12 @@ public class participacionDAO {
         } catch (SQLException e) {
            Alerta.mostrar("Error en la conexión: " + e.getMessage());
         } catch (Exception e) {
-            Alerta.mostrar("Error en la actualización del tipo de usuario: " + e.getMessage());
+            Alerta.mostrar("Error en la actualización de la participación: " + e.getMessage());
         }
     }
 
     //eliminar participacion
-    public static void eliminar_participacion(participacion participacion) {
+    public static void eliminar_participacion(Participacion participacion) {
         String consulta = "DELETE FROM participacion WHERE codigo_participacion = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setString(1, participacion.getCodigo_participacion());
@@ -98,7 +120,7 @@ public class participacionDAO {
         } catch (SQLException e) {
             Alerta.mostrar("Error en la conexión: " + e.getMessage());
         } catch (Exception e) {
-            Alerta.mostrar("Error en el borrado del tipo de usuario: " + e.getMessage());           
+            Alerta.mostrar("Error en el borrado de la participación: " + e.getMessage());           
         }
     }
 }

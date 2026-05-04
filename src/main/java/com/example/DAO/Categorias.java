@@ -1,17 +1,17 @@
 package com.example.DAO;
 
-public class categorias {
+public class Categorias {
     private int id_categoria;
     private String nombre;
     private String codigo_encuesta;
 
-    public categorias() {
+    public Categorias() {
         this.id_categoria = 0;
         this.nombre = "";
         this.codigo_encuesta = "";
     }
 
-    public categorias(int id_categoria, String nombre, String codigo_encuesta) {
+    public Categorias(int id_categoria, String nombre, String codigo_encuesta) {
         this.id_categoria = id_categoria;
         this.nombre = nombre;
         this.codigo_encuesta = codigo_encuesta;

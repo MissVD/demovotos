@@ -1,15 +1,15 @@
 package com.example.DAO;
 
-public class historial {
+public class Historial {
     private String DNI;
     private String codigo_participacion;
 
-    public historial() {
+    public Historial() {
         this.DNI = "";
         this.codigo_participacion = "";
     }
 
-    public historial(String DNI, String codigo_participacion) {
+    public Historial(String DNI, String codigo_participacion) {
         this.DNI = DNI;
         this.codigo_participacion = codigo_participacion;
     }

@@ -1,15 +1,15 @@
 package com.example.DAO;
 
-public class relacion_usuario_tipo {
+public class RelacionUsuarioTipo {
     private String DNI;
     private int id_tipo;
 
-    public relacion_usuario_tipo() {
+    public RelacionUsuarioTipo() {
         this.DNI = "";
         this.id_tipo = 0;
     }
     
-    public relacion_usuario_tipo(String DNI, int id_tipo) {
+    public RelacionUsuarioTipo(String DNI, int id_tipo) {
         this.DNI = DNI;
         this.id_tipo = id_tipo;
     }

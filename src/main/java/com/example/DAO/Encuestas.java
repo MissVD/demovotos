@@ -1,7 +1,7 @@
 package com.example.DAO;
 import java.time.LocalDateTime;
 
-public class encuestas {
+public class Encuestas {
     private String codigo_encuesta;
     private String nombre;
     private String descripcion;
@@ -10,7 +10,7 @@ public class encuestas {
     private LocalDateTime fecha_inicio;
     private LocalDateTime fecha_fin;
 
-    public encuestas() {
+    public Encuestas() {
         this.codigo_encuesta = "";
         this.nombre = "";
         this.descripcion = "";
@@ -20,7 +20,7 @@ public class encuestas {
         this.fecha_fin = LocalDateTime.now();
     }
 
-    public encuestas (String codigo_encuesta, String nombre, String descripcion, boolean tiempo_real, boolean anonimo, LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
+    public Encuestas(String codigo_encuesta, String nombre, String descripcion, boolean tiempo_real, boolean anonimo, LocalDateTime fecha_inicio, LocalDateTime fecha_fin) {
         this.codigo_encuesta = codigo_encuesta;
         this.nombre = nombre;
         this.descripcion = descripcion;

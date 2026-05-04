@@ -10,15 +10,15 @@ import java.util.List;
 
 import com.example.UI.Alerta;
 
-public class encuestasDAO {
+public class EncuestasDAO {
     //mostrar todos registros de encuestas
-    public static List<encuestas> mostrar_encuestas() {
+    public static List<Encuestas> mostrar_encuestas() {
         String consulta = "SELECT * FROM encuestas";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);) {
             try (ResultSet rs = stmt.executeQuery()){
-                List<encuestas> encuestas = new ArrayList<>();
+                List<Encuestas> encuestas = new ArrayList<>();
                 while(rs.next()) {
-                    encuestas encuesta = new encuestas(rs.getString("codigo_encuesta"), rs.getString("nombre"), rs.getString("descripcion"), rs.getBoolean("tiempo_real"), rs.getBoolean("anonimo"), rs.getTimestamp("fecha_inicio").toLocalDateTime(), rs.getTimestamp("fecha_fin").toLocalDateTime());
+                    Encuestas encuesta = new Encuestas(rs.getString("codigo_encuesta"), rs.getString("nombre"), rs.getString("descripcion"), rs.getBoolean("tiempo_real"), rs.getBoolean("anonimo"), rs.getTimestamp("fecha_inicio").toLocalDateTime(), rs.getTimestamp("fecha_fin").toLocalDateTime());
                     encuestas.add(encuesta);
                 }
             return encuestas;
@@ -33,14 +33,38 @@ public class encuestasDAO {
     }
 
     // mostrar encuestas por usuario
-    public static List<encuestas> mostrar_encuestas_parametro(String columna, String parametro) {
-        String consulta = "SELECT * FROM encuestas WHERE " + columna + " = ?";
+    public static List<Encuestas> mostrar_encuestas_parametro(int opcion, String parametro) {
+        String [] columna = {"codigo_encuesta", "nombre", "descripcion", "tiempo_real", "anonimo", "fecha_inicio", "fecha_fin"};
+        
+        if (opcion < 0 || opcion >= columna.length){
+            Alerta.mostrar("Opción de búsqueda no válida.");
+            return new ArrayList<>();
+        }
+        
+        String consulta = "SELECT * FROM encuestas WHERE " + columna[opcion] + " = ?";
+        
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);) {
-            stmt.setString(1, parametro);
+            
+            switch (opcion) {
+                case 0:
+                case 1:
+                case 2: stmt.setString(1, parametro);
+                        break;
+                case 3:
+                case 4: stmt.setBoolean(1, Boolean.parseBoolean(parametro));
+                        break;
+                case 5: 
+                case 6: stmt.setTimestamp(1, Timestamp.valueOf(parametro));
+                        break;
+                default:
+                    Alerta.mostrar("Opción no válida.");
+                    return new ArrayList<>();
+            }
+
             try (ResultSet rs = stmt.executeQuery()){
-                List<encuestas> encuestas = new ArrayList<>();
+                List<Encuestas> encuestas = new ArrayList<>();
                 while(rs.next()) {
-                    encuestas encuesta = new encuestas(rs.getString("codigo_encuesta"), rs.getString("nombre"), rs.getString("descripcion"), rs.getBoolean("tiempo_real"), rs.getBoolean("anonimo"), rs.getTimestamp("fecha_inicio").toLocalDateTime(), rs.getTimestamp("fecha_fin").toLocalDateTime());
+                    Encuestas encuesta = new Encuestas(rs.getString("codigo_encuesta"), rs.getString("nombre"), rs.getString("descripcion"), rs.getBoolean("tiempo_real"), rs.getBoolean("anonimo"), rs.getTimestamp("fecha_inicio").toLocalDateTime(), rs.getTimestamp("fecha_fin").toLocalDateTime());
                     encuestas.add(encuesta);
                 }
             return encuestas;
@@ -49,13 +73,13 @@ public class encuestasDAO {
             Alerta.mostrar("Error en la conexión: " + e.getMessage());
             return new ArrayList<>();
         } catch (Exception e) {
-            Alerta.mostrar("Error en la busqueda por parámetro de participaciones: " + e.getMessage());
+            Alerta.mostrar("Error en la busqueda por parámetro de encuestas: " + e.getMessage());
             return new ArrayList<>();
         }
     }
 
     //insertar encuesta
-    public static void insertar_encuesta(encuestas encuesta) {
+    public static void insertar_encuesta(Encuestas encuesta) {
         String consulta = "INSERT INTO encuestas (codigo_encuesta, nombre, descripcion, tiempo_real, anonimo, fecha_inicio, fecha_fin) VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setString(1, encuesta.getCodigo_encuesta());
@@ -66,16 +90,16 @@ public class encuestasDAO {
             stmt.setTimestamp(6, Timestamp.valueOf(encuesta.getFecha_inicio()));
             stmt.setTimestamp(7, Timestamp.valueOf(encuesta.getFecha_fin()));
             stmt.executeUpdate();
-            System.out.println("Participacion insertada correctamente.");
+            System.out.println("Encuesta insertada correctamente.");
         } catch (SQLException e) {
             Alerta.mostrar("Error en la conexión: " + e.getMessage());
         } catch (Exception e) {
-            Alerta.mostrar("Error en la inserción de la participacion: " + e.getMessage());
+            Alerta.mostrar("Error en la inserción de la encuesta: " + e.getMessage());
         }
     }
 
     //modificar encuesta
-    public static void modificar_encuesta(encuestas encuesta) {
+    public static void modificar_encuesta(Encuestas encuesta) {
         String consulta = "UPDATE encuestas SET nombre = ?, descripcion = ?, tiempo_real = ?, anonimo = ?, fecha_inicio = ?, fecha_fin = ? WHERE codigo_encuesta = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setString(1, encuesta.getNombre());
@@ -95,7 +119,7 @@ public class encuestasDAO {
     }
 
     //eliminar encuesta
-    public static void eliminar_encuesta(encuestas encuesta) {
+    public static void eliminar_encuesta(Encuestas encuesta) {
         String consulta = "DELETE FROM encuestas WHERE codigo_encuesta = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setString(1, encuesta.getCodigo_encuesta());

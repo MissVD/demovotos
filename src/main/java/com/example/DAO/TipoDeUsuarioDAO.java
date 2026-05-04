@@ -9,16 +9,16 @@ import java.util.List;
 
 import com.example.UI.Alerta;
 
-public class tipo_de_usuarioDAO {
+public class TipoDeUsuarioDAO {
 
     //mostrar todos registros de tipo_de_usuario
-    public static List<tipo_de_usuario> mostrar_tipo_de_usuarios() {
+    public static List<TipoDeUsuario> mostrar_tipo_de_usuarios() {
         String consulta = "SELECT * FROM tipo_de_usuario";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);) {
             try (ResultSet rs = stmt.executeQuery()){
-                List<tipo_de_usuario> tipos = new ArrayList<>();
+                List<TipoDeUsuario> tipos = new ArrayList<>();
                 while(rs.next()) {
-                    tipo_de_usuario tipo = new tipo_de_usuario(rs.getInt("id_tipo"), rs.getString("nombre"));
+                    TipoDeUsuario tipo = new TipoDeUsuario(rs.getInt("id_tipo"), rs.getString("nombre"));
                     tipos.add(tipo);
                 }
             return tipos;
@@ -33,7 +33,7 @@ public class tipo_de_usuarioDAO {
     }
 
     //insertar tipo_de_usuario
-    public static void insertar_tipo_de_usuario(tipo_de_usuario tipo) {
+    public static void insertar_tipo_de_usuario(TipoDeUsuario tipo) {
         String consulta = "INSERT INTO tipo_de_usuario (id_tipo, nombre) VALUES (?, ?)";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setInt(1, tipo.getId_tipo());
@@ -48,7 +48,7 @@ public class tipo_de_usuarioDAO {
     }
 
     //modificar tipo_de_usuario
-    public static void modificar_tipo_de_usuario(tipo_de_usuario tipo) {
+    public static void modificar_tipo_de_usuario(TipoDeUsuario tipo) {
         String consulta = "UPDATE tipo_de_usuario SET nombre = ? WHERE id_tipo = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setString(1, tipo.getNombre());
@@ -63,8 +63,8 @@ public class tipo_de_usuarioDAO {
     }
 
     //eliminar tipo_de_usuario
-    public static void eliminar_tipo_de_usuario(tipo_de_usuario tipo) {
-        String consulta = "DELETE FROM tipo_de_usuario where id = ?";
+    public static void eliminar_tipo_de_usuario(TipoDeUsuario tipo) {
+        String consulta = "DELETE FROM tipo_de_usuario where id_tipo = ?";
         try (Connection con = Conexion.getConnection(); PreparedStatement stmt = con.prepareStatement(consulta);){
             stmt.setInt(1, tipo.getId_tipo());
             stmt.executeUpdate();

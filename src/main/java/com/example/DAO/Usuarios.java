@@ -1,19 +1,19 @@
 package com.example.DAO;
 
-public class usuarios {
+public class Usuarios {
     private String DNI;
     private String admin;
     private String usuario;
     private String password_hash;
 
-    public usuarios() {
+    public Usuarios() {
         this.DNI = "";
         this.admin = "";
         this.usuario = "";
         this.password_hash = "";
     }
     
-    public usuarios(String DNI, String admin, String usuario, String password_hash) {
+    public Usuarios(String DNI, String admin, String usuario, String password_hash) {
         this.DNI = DNI;
         this.admin = admin;
         this.usuario = usuario;
