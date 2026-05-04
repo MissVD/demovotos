@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.TextFlow?>
+
+<VBox alignment="CENTER" prefHeight="632.0" prefWidth="976.0" spacing="20.0" style="-fx-background-color: #000000; -fx-background-radius: 20px;" xmlns="http://javafx.com/javafx/25" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ControladorCarreras">
+   <children>
+      <AnchorPane fx:id="arrastrable" prefHeight="688.0" prefWidth="936.0">
+         <children>
+            <TextFlow layoutX="388.0" layoutY="134.0" prefHeight="435.0" prefWidth="531.0" style="-fx-background-color: #262626; -fx-background-radius: 20;" />
+            <Label fx:id="tituloPantalla" layoutX="36.0" layoutY="60.0">
+               <graphic>
+                  <ImageView preserveRatio="true">
+                        <image>
+                           <Image url="@images/Carrera.png" />
+                        </image>
+                  </ImageView>
+               </graphic>
+            </Label>
+            <Button fx:id="botonCarreras" layoutX="251.0" layoutY="18.0" onAction="#vistaCarreras" onMouseEntered="#botonCarrerasEncima" onMouseExited="#botonCarrerasFuera" onMousePressed="#botonCarrerasPresionado" onMouseReleased="#botonCarrerasSoltado" prefHeight="45.0" prefWidth="131.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="imagenBotonCarreras" preserveRatio="true">
+                        <image>
+                           <Image url="@images/Carrera3.png" />
+                        </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="botonParticipantes" layoutX="387.0" layoutY="18.0" onAction="#vistaParticipantes" onMouseEntered="#botonParticipantesEncima" onMouseExited="#botonParticipantesFuera" onMousePressed="#botonParticipantesPresionado" onMouseReleased="#botonParticipantesSoltado" prefHeight="45.0" prefWidth="149.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="imagenBotonParticipantes" preserveRatio="true">
+                        <image>
+                           <Image url="@images/Participante1.png" />
+                        </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="botonClasificaciones" layoutX="541.0" layoutY="18.0" onAction="#vistaClasificaciones" onMouseEntered="#botonClasificacionesEncima" onMouseExited="#botonClasificacionesFuera" onMousePressed="#botonClasificacionesPresionado" onMouseReleased="#botonClasificacionesSoltado" prefHeight="45.0" prefWidth="159.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="imagenBotonClasificaciones" preserveRatio="true">
+                        <image>
+                           <Image url="@images/Clasificacion1.png" />
+                        </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="botonEstadisticas" layoutX="705.0" layoutY="18.0" onAction="#vistaEstadisticas" onMouseEntered="#botonEstadisticasEncima" onMouseExited="#botonEstadisticasFuera" onMousePressed="#botonEstadisticasPresionado" onMouseReleased="#botonEstadisticasSoltado" prefHeight="45.0" prefWidth="144.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="imagenBotonEstadisticas" preserveRatio="true">
+                        <image>
+                           <Image url="@images/Estadisticas1.png" />
+                        </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="botonSalir" layoutX="900.0" layoutY="0.0" onAction="#cerrarPrograma" onMouseEntered="#botonSalirEncima" onMouseExited="#botonSalirFuera" onMousePressed="#botonSalirPresionado" onMouseReleased="#botonSalirSoltado" prefHeight="51.0" prefWidth="51.0" style="-fx-background-color: transparent;">
+               <graphic>
+                  <ImageView fx:id="imagenBotonSalir" preserveRatio="true">
+                        <image>
+                           <Image url="@images/Salir1.png" />
+                        </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="tituloFormularioNombre" layoutX="36.0" layoutY="140.0" text="NOMBRE" textFill="#fdfdfd">
+               <font>
+                  <Font name="Leelawadee UI" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="campoFormularioNombre" layoutX="36.0" layoutY="162.0" prefHeight="38.0" prefWidth="314.0" style="-fx-background-color: #262626;" />
+            <DatePicker fx:id="campoFormularioFecha" layoutX="36.0" layoutY="249.0" prefHeight="38.0" prefWidth="314.0" style="-fx-background-color: #262626;" />
+            <TableView fx:id="tablaCarreras" layoutX="410.0" layoutY="153.0" prefHeight="400.0" style="-fx-background-color: #262626;">
+              <columns>
+                <TableColumn fx:id="columnaTablaNombre" prefWidth="100.0" reorderable="false" resizable="false" text="Nombre" />
+                <TableColumn fx:id="columnaTablaFecha" prefWidth="100.0" reorderable="false" resizable="false" text="Fecha" />
+                  <TableColumn fx:id="columnaTablaLugar" prefWidth="100.0" reorderable="false" resizable="false" text="Lugar" />
+                  <TableColumn fx:id="columnaTablaDistancia" prefWidth="100.0" reorderable="false" resizable="false" text="Distancia (km)" />
+                  <TableColumn fx:id="columnaTablaOpciones" prefWidth="86.0" reorderable="false" resizable="false" text=" " />
+              </columns>
+            </TableView>
+            <TextField fx:id="campoFormularioLugar" layoutX="36.0" layoutY="334.0" prefHeight="38.0" prefWidth="314.0" style="-fx-background-color: #262626;" />
+            <TextField fx:id="campoFormularioDistancia" layoutX="36.0" layoutY="423.0" prefHeight="38.0" prefWidth="314.0" style="-fx-background-color: #262626;" />
+            <Label fx:id="tituloFormularioFecha" layoutX="36.0" layoutY="227.0" text="FECHA" textFill="#fdfdfd">
+               <font>
+                  <Font name="Leelawadee UI" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="tituloFormularioLugar" layoutX="36.0" layoutY="312.0" text="LUGAR" textFill="#fdfdfd">
+               <font>
+                  <Font name="Leelawadee UI" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="tituloFormularioDistancia" layoutX="34.0" layoutY="401.0" text="DISTANCIA" textFill="#fdfdfd">
+               <font>
+                  <Font name="Leelawadee UI" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="botonFormularioAnadir" layoutX="133.0" layoutY="492.0" mnemonicParsing="false" onAction="#anadirCarrera" onMouseEntered="#botonFormularioEncima" onMouseExited="#botonFormularioFuera" onMousePressed="#botonFormularioPresionado" onMouseReleased="#botonFormularioSoltado" prefHeight="44.0" prefWidth="121.0" style="-fx-background-color: #8ffca0; -fx-background-radius: 20;" text="AÑADIR" textFill="#262626">
+               <font>
+                  <Font name="Leelawadee UI Bold" size="12.0" />
+               </font></Button>
+            <TextField fx:id="campoTablaBuscar" layoutX="749.0" layoutY="90.0" prefHeight="32.0" prefWidth="160.0" style="-fx-background-color: #262626; -fx-background-radius: 20;" />
+            <Button fx:id="botonTablaBuscar" layoutX="876.0" layoutY="90.0" mnemonicParsing="false" onAction="#abrirBusqueda" onMouseEntered="#botonBusquedaEncima" onMouseExited="#botonBusquedaFuera" onMousePressed="#botonBusquedaPresionado" onMouseReleased="#botonBusquedaSoltado" prefHeight="32.0" prefWidth="32.0" style="-fx-background-color: #0bcbfb; -fx-background-radius: 20;" />
+         </children>
+      </AnchorPane>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
